@@ -1,9 +1,11 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Wrapper, Content, FormGroup } from './AuthForm.styles';
 import { ILoginShowProps, ICredential } from 'components/Interface';
+import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import { useSelector, useDispatch } from 'react-redux';
-import { login } from 'features/auth/authSlice';
+import { login, reset } from 'features/auth/authSlice';
+import { RootState } from 'store/store';
 import { AppDispatch } from 'store/store';
 
 const initialCredential: ICredential = {
@@ -13,6 +15,8 @@ const initialCredential: ICredential = {
 const LoginForm: React.FC<ILoginShowProps> = ({ setLoginShow }) => {
   const [credential, setCredential] = useState<ICredential>(initialCredential);
   const dispatch = useDispatch<AppDispatch>();
+  const { user, isLoading, isError, isSuccess, message } = useSelector((state: RootState) => state.auth);
+  const navigate = useNavigate();
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     console.log(credential);
@@ -28,6 +32,15 @@ const LoginForm: React.FC<ILoginShowProps> = ({ setLoginShow }) => {
       [e.target.name]: e.target.value,
     }));
   };
+  useEffect(() => {
+    if (isError) {
+      toast.error(message);
+    }
+    if (isSuccess || user) {
+      navigate('/');
+    }
+    dispatch(reset());
+  }, [user, isError, isSuccess, message, navigate, dispatch]);
   return (
     <Wrapper>
       <Content>

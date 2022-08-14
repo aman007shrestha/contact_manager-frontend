@@ -38,8 +38,12 @@ export const GlobalStyle = createGlobalStyle`
       color: var(--black);
     }
     .nav__link{
+      display: flex;
+      align-items: center;
+      gap:8px;
       text-decoration: none;
-      color: rgba(0, 0, 0, 0.85)
+      color: rgba(0, 0, 0, 0.85);
+      
     }
     .container {
       width: 100%;
@@ -52,9 +56,9 @@ export const GlobalStyle = createGlobalStyle`
       font-size: 14px;
       color: #333;
       outline: none;
-      cursor:pointer;
       border:none;
       border-radius: 5px;
+      cursor:pointer;
     }
   }
 `;

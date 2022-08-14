@@ -11,3 +11,8 @@ export const login = async (userData: IUserData) => {
   }
   return response.data;
 };
+
+// Logout user
+export const logout = () => {
+  localStorage.removeItem('user');
+};

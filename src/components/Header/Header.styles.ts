@@ -40,4 +40,14 @@ export const Content = styled.div`
       gap: 20px;
     }
   }
+  .btn__logout {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: none;
+    border: none;
+    color: rgba(0, 0, 0, 0.85);
+    font-size: 16px;
+    cursor: pointer;
+  }
 `;

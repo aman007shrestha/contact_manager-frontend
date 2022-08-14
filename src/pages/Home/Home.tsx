@@ -1,7 +1,13 @@
 import React from 'react';
+import Spinner from '../../components/Spinner';
 
 const Home = () => {
-  return <div>Home</div>;
+  return (
+    <div>
+      {/* <Spinner /> */}
+      jj
+    </div>
+  );
 };
 
 export default Home;
