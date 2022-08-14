@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from 'react';
-import { Wrapper, Content, FormGroup } from './AuthForm.styles';
-import { ILoginShowProps, ICredential } from 'components/Interface';
 import { useNavigate } from 'react-router-dom';
-import { toast } from 'react-toastify';
 import { useSelector, useDispatch } from 'react-redux';
-import { login, reset } from 'features/auth/authSlice';
+import { toast } from 'react-toastify';
 import { RootState } from 'store/store';
 import { AppDispatch } from 'store/store';
+import { ILoginShowProps, ICredential } from 'components/Interface';
+import { login, reset } from 'features/auth/authSlice';
+import { Wrapper, Content, FormGroup } from './AuthForm.styles';
 
 const initialCredential: ICredential = {
   email: '',

@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
-import { Wrapper, Content } from './AuthPage.styles';
-import LoginForm from 'components/AuthForm/LoginForm';
 import RegisterForm from 'components/AuthForm/RegisterForm';
+import LoginForm from 'components/AuthForm/LoginForm';
+import { Wrapper, Content } from './AuthPage.styles';
 
 const AuthPage = () => {
   const [loginShow, setLoginShow] = useState(true);

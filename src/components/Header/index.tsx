@@ -1,14 +1,13 @@
 import React from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
-import { Wrapper, Content } from './Header.styles';
-import { FaSignOutAlt, FaUserAlt, FaUsers, FaSignInAlt } from 'react-icons/fa';
+import { HiUserGroup } from 'react-icons/hi';
 import { GrContactInfo } from 'react-icons/gr';
-import { CgProfile } from 'react-icons/cg';
-import { HiUserCircle, HiUserGroup, HiUser } from 'react-icons/hi';
-import { logout, reset } from 'features/auth/authSlice';
+import { FaSignOutAlt, FaUserAlt, FaSignInAlt } from 'react-icons/fa';
 import { RootState } from 'store/store';
 import { AppDispatch } from 'store/store';
+import { logout, reset } from 'features/auth/authSlice';
+import { Wrapper, Content } from './Header.styles';
 
 const Header = () => {
   const navigate = useNavigate();

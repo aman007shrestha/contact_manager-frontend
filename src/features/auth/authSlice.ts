@@ -1,6 +1,5 @@
-import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import { PayloadAction } from '@reduxjs/toolkit';
 import * as authService from './authService';
+import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import { IUserData } from './interface';
 
 // Get user from localStorage
@@ -17,8 +16,6 @@ const initialState = {
 // Login
 export const login = createAsyncThunk('auth/login', async (user: IUserData, thunkAPI) => {
   try {
-    console.log('Heki');
-
     return await authService.login(user);
   } catch (error: any) {
     const message =
@@ -26,6 +23,18 @@ export const login = createAsyncThunk('auth/login', async (user: IUserData, thun
     return thunkAPI.rejectWithValue(message);
   }
 });
+
+// Async Api for registrating the user
+export const register = createAsyncThunk('auth/register', async (user: IUserData, thunkAPI) => {
+  try {
+    return await authService.register(user);
+  } catch (error: any) {
+    const message =
+      (error.response && error.response.data && error.response.data.message) || error.message || error.toString();
+    return thunkAPI.rejectWithValue(message);
+  }
+});
+
 // logout
 export const logout = createAsyncThunk('auth/logout', async () => {
   await authService.logout();
@@ -59,6 +68,19 @@ export const authSlice = createSlice({
         state.user = null;
       })
       .addCase(logout.fulfilled, state => {
+        state.user = null;
+      })
+      .addCase(register.pending, state => {
+        state.isLoading = true;
+      })
+      .addCase(register.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.isSuccess = true;
+      })
+      .addCase(register.rejected, (state, action) => {
+        state.isLoading = false;
+        state.isError = false;
+        state.message = action.payload as string;
         state.user = null;
       });
   },
