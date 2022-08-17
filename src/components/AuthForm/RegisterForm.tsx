@@ -7,6 +7,7 @@ import { RootState } from 'store/store';
 import { ICredential, ILoginShowProps } from 'components/Interface';
 import { register, reset } from 'features/auth/authSlice';
 import { Wrapper, Content, FormGroup } from './AuthForm.styles';
+import Spinner from '../../components/Spinner';
 
 const initialCredential = {
   email: '',
@@ -24,6 +25,8 @@ const RegisterForm: React.FC<ILoginShowProps> = ({ setLoginShow }) => {
   const dispatch = useDispatch<AppDispatch>();
   const { user, isLoading, isError, isSuccess, message } = useSelector((state: RootState) => state.auth);
   const [credential, setCredential] = useState<ICredential>(initialCredential);
+
+  // dispatch register action, check confirmPW === PW
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (credential.password !== credential.confirmPassword) {
@@ -48,9 +51,10 @@ const RegisterForm: React.FC<ILoginShowProps> = ({ setLoginShow }) => {
       email: credential.email,
       password: credential.password,
     };
-    // dispatch action here
     dispatch(register(userData));
   };
+
+  // Action at each render
   useEffect(() => {
     if (isError) {
       toast.error(message);
@@ -63,12 +67,18 @@ const RegisterForm: React.FC<ILoginShowProps> = ({ setLoginShow }) => {
     dispatch(reset());
   }, [user, isError, isSuccess, message, navigate, dispatch]);
 
+  // handle state value on inpit change
   const handleChange = (e: { target: HTMLInputElement }) => {
     setCredential(credential => ({
       ...credential,
       [e.target.name]: e.target.value,
     }));
   };
+
+  // If loading render spinner
+  if (isLoading) {
+    return <Spinner />;
+  }
   return (
     <Wrapper>
       <Content>

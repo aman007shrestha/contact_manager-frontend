@@ -7,40 +7,54 @@ import { AppDispatch } from 'store/store';
 import { ILoginShowProps, ICredential } from 'components/Interface';
 import { login, reset } from 'features/auth/authSlice';
 import { Wrapper, Content, FormGroup } from './AuthForm.styles';
+import Spinner from '../../components/Spinner';
 
 const initialCredential: ICredential = {
   email: '',
   password: '',
 };
+/**
+ * @desc : Renders login form based on LoginShow state, can be toggled to sign up form based on setLoginShow
+ * @param
+ * @returns
+ */
 const LoginForm: React.FC<ILoginShowProps> = ({ setLoginShow }) => {
-  const [credential, setCredential] = useState<ICredential>(initialCredential);
   const dispatch = useDispatch<AppDispatch>();
-  const { user, isLoading, isError, isSuccess, message } = useSelector((state: RootState) => state.auth);
   const navigate = useNavigate();
+  const [credential, setCredential] = useState<ICredential>(initialCredential);
+  const { user, isLoading, isError, isSuccess, message } = useSelector((state: RootState) => state.auth);
+  // Dispatch Login action
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    console.log(credential);
     const userData = {
       email: credential.email,
       password: credential.password,
     };
     dispatch(login(userData));
   };
+  // Update credential state on each input change
   const handleChange = (e: { target: HTMLInputElement }) => {
     setCredential(credential => ({
       ...credential,
       [e.target.name]: e.target.value,
     }));
   };
+  // At each new render
   useEffect(() => {
     if (isError) {
       toast.error(message);
     }
     if (isSuccess || user) {
       navigate('/');
+      return;
     }
     dispatch(reset());
   }, [user, isError, isSuccess, message, navigate, dispatch]);
+
+  // If loading State, Render Spinner object
+  if (isLoading) {
+    return <Spinner />;
+  }
   return (
     <Wrapper>
       <Content>
