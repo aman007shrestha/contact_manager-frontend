@@ -40,7 +40,8 @@ export const Content = styled.div`
   .img--container {
     height: 200px;
     width: 200px;
-    background-color: #333;
+    background-color: #dae2f8;
+    background-image: linear-gradient(to right, #dae2f8, #d6a4a4);
     border-radius: 50%;
   }
   .profile__image {
