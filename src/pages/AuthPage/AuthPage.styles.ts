@@ -11,8 +11,9 @@ export const Content = styled.div`
   height: 500px;
   .intro {
     font-size: 36px;
-    font-weight: 500;
+    font-weight: 600;
     text-align: center;
+    color: #333;
     @media screen and (max-width: 500px) {
       font-size: 30px;
     }

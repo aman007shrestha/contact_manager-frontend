@@ -15,7 +15,7 @@ export const Content = styled.div`
   color: #333;
   h2 {
     font-weight: 550;
-    color: #4a4946;
+    color: #333;
   }
   p {
     text-align: center;

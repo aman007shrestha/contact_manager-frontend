@@ -4,14 +4,18 @@ import { ToastContainer } from 'react-toastify';
 import { Provider } from 'react-redux';
 import { store } from 'store/store';
 import { GlobalStyle } from 'GlobalStyle';
-import 'react-toastify/dist/ReactToastify.css';
 import './App.css';
+import 'react-toastify/dist/ReactToastify.css';
 import Home from 'pages/Home/Home';
 import AuthPage from 'pages/AuthPage/';
 import Profile from 'pages/Profile/Profile';
 import UsersList from 'pages/Users/UsersList';
 import Header from './components/Header';
 
+/**
+ * @desc The root App components wraps redux store, contains Header and Routings
+ * @returns
+ */
 function App() {
   return (
     <>

@@ -9,15 +9,22 @@ import { AppDispatch } from 'store/store';
 import { logout, reset } from 'features/auth/authSlice';
 import { Wrapper, Content } from './Header.styles';
 
+/**
+ * @desc Navbar show nav links based on login state
+ * @returns
+ */
 const Header = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch<AppDispatch>();
   const { user } = useSelector((state: RootState) => state.auth);
+
+  // Handle Logout
   const logoutHandler = () => {
     dispatch(logout());
     dispatch(reset());
-    navigate('/');
+    navigate('/login');
   };
+
   return (
     <Wrapper>
       <Content>

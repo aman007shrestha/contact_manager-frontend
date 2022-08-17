@@ -3,8 +3,13 @@ import RegisterForm from 'components/AuthForm/RegisterForm';
 import LoginForm from 'components/AuthForm/LoginForm';
 import { Wrapper, Content } from './AuthPage.styles';
 
+/**
+ * @desc Login/Register Page loginShow state handles the visibility of form
+ * @returns
+ */
 const AuthPage = () => {
   const [loginShow, setLoginShow] = useState(true);
+  // Render Intro And Form
   return (
     <Wrapper>
       <Content>

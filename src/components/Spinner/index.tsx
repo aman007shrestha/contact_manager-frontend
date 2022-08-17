@@ -1,6 +1,7 @@
 import React from 'react';
 import { Wrapper } from './Spinner.style';
 
+// Create a Spinner Object
 const index = () => {
   return (
     <Wrapper>

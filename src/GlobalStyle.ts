@@ -21,6 +21,7 @@ export const GlobalStyle = createGlobalStyle`
   body {
     margin: 0;
     padding: 0;
+    background-color:#f8f7f7;
     
     h1 {
       font-size: 2rem;
@@ -42,7 +43,7 @@ export const GlobalStyle = createGlobalStyle`
       align-items: center;
       gap:8px;
       text-decoration: none;
-      color: rgba(0, 0, 0, 0.85);
+      color: #333;
       
     }
     .container {

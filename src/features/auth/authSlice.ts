@@ -13,7 +13,9 @@ const initialState = {
   message: '',
 };
 
-// Login
+/**
+ * @desc create async reducer which calls service action for login
+ */
 export const login = createAsyncThunk('auth/login', async (user: IUserData, thunkAPI) => {
   try {
     return await authService.login(user);
@@ -24,7 +26,9 @@ export const login = createAsyncThunk('auth/login', async (user: IUserData, thun
   }
 });
 
-// Async Api for registrating the user
+/**
+ * @desc create async reducer which calls service action for register
+ */
 export const register = createAsyncThunk('auth/register', async (user: IUserData, thunkAPI) => {
   try {
     return await authService.register(user);
@@ -35,11 +39,14 @@ export const register = createAsyncThunk('auth/register', async (user: IUserData
   }
 });
 
-// logout
+/**
+ * @desc create async reducer which calls service action for logout
+ */
 export const logout = createAsyncThunk('auth/logout', async () => {
   await authService.logout();
 });
 
+// Create slices for reducer states
 export const authSlice = createSlice({
   name: 'auth',
   initialState,
@@ -52,14 +59,16 @@ export const authSlice = createSlice({
     },
   },
   extraReducers: builder => {
+    // Builder cases: Rejected, Fulfilled, Pending
     builder
+      // Login Builder state
       .addCase(login.pending, state => {
         state.isLoading = true;
       })
       .addCase(login.fulfilled, (state, action) => {
         state.isLoading = false;
         state.isSuccess = true;
-        state.user = action.payload;
+        state.user = action.payload.data;
       })
       .addCase(login.rejected, (state, action) => {
         state.isLoading = false;
@@ -67,6 +76,7 @@ export const authSlice = createSlice({
         state.message = action.payload as string;
         state.user = null;
       })
+      // Logout Builder state
       .addCase(logout.fulfilled, state => {
         state.user = null;
       })
@@ -77,6 +87,7 @@ export const authSlice = createSlice({
         state.isLoading = false;
         state.isSuccess = true;
       })
+      // Register Builder state
       .addCase(register.rejected, (state, action) => {
         state.isLoading = false;
         state.isError = false;
