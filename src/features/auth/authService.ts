@@ -11,3 +11,14 @@ export const login = async (userData: IUserData) => {
   }
   return response.data;
 };
+
+// Register User
+export const register = async (userData: IUserData) => {
+  const response = await axios.post(API_URL + 'register', userData);
+  return response.data;
+};
+
+// Logout user
+export const logout = () => {
+  localStorage.removeItem('user');
+};

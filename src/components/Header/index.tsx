@@ -1,9 +1,23 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
-import { Wrapper, Content } from './Header.styles';
+import { Link, useNavigate } from 'react-router-dom';
+import { useSelector, useDispatch } from 'react-redux';
+import { HiUserGroup } from 'react-icons/hi';
 import { GrContactInfo } from 'react-icons/gr';
+import { FaSignOutAlt, FaUserAlt, FaSignInAlt } from 'react-icons/fa';
+import { RootState } from 'store/store';
+import { AppDispatch } from 'store/store';
+import { logout, reset } from 'features/auth/authSlice';
+import { Wrapper, Content } from './Header.styles';
 
-const index = () => {
+const Header = () => {
+  const navigate = useNavigate();
+  const dispatch = useDispatch<AppDispatch>();
+  const { user } = useSelector((state: RootState) => state.auth);
+  const logoutHandler = () => {
+    dispatch(logout());
+    dispatch(reset());
+    navigate('/');
+  };
   return (
     <Wrapper>
       <Content>
@@ -18,19 +32,27 @@ const index = () => {
           </Link>
         </div>
         <div className="nav__right">
-          <Link to="/users" className="nav__link">
-            Users
-          </Link>
-          <Link to="/profile" className="nav__link">
-            Profile
-          </Link>
-          <Link to="/login" className="nav__link">
-            Logout
-          </Link>
+          {user ? (
+            <>
+              <Link to="/users" className="nav__link">
+                <HiUserGroup size={17} /> Users
+              </Link>
+              <Link to="/profile" className="nav__link">
+                <FaUserAlt size={14} /> Profile
+              </Link>
+              <button className="nav__link btn__logout" onClick={logoutHandler}>
+                <FaSignOutAlt /> Logout
+              </button>
+            </>
+          ) : (
+            <Link to="/login" className="nav__link">
+              <FaSignInAlt /> Login
+            </Link>
+          )}
         </div>
       </Content>
     </Wrapper>
   );
 };
 
-export default index;
+export default Header;

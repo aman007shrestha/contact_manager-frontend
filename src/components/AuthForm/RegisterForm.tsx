@@ -1,8 +1,12 @@
-import React, { useState } from 'react';
-import { Wrapper, Content, FormGroup } from './AuthForm.styles';
+import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
 import { toast } from 'react-toastify';
+import { AppDispatch } from 'store/store';
+import { RootState } from 'store/store';
 import { ICredential, ILoginShowProps } from 'components/Interface';
-import { useDispatch } from 'react-redux';
+import { register, reset } from 'features/auth/authSlice';
+import { Wrapper, Content, FormGroup } from './AuthForm.styles';
 
 const initialCredential = {
   email: '',
@@ -16,6 +20,9 @@ const initialCredential = {
  * @returns view for sign up, dispatched register action
  */
 const RegisterForm: React.FC<ILoginShowProps> = ({ setLoginShow }) => {
+  const navigate = useNavigate();
+  const dispatch = useDispatch<AppDispatch>();
+  const { user, isLoading, isError, isSuccess, message } = useSelector((state: RootState) => state.auth);
   const [credential, setCredential] = useState<ICredential>(initialCredential);
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -37,9 +44,24 @@ const RegisterForm: React.FC<ILoginShowProps> = ({ setLoginShow }) => {
       toast.warning('Password too weak');
       return;
     }
+    const userData = {
+      email: credential.email,
+      password: credential.password,
+    };
     // dispatch action here
-    toast.success('User Registered, Proceed login');
+    dispatch(register(userData));
   };
+  useEffect(() => {
+    if (isError) {
+      toast.error(message);
+    }
+    if (isSuccess || user) {
+      toast.success('User Registered, Proceed login');
+      setLoginShow(true);
+      navigate('/login');
+    }
+    dispatch(reset());
+  }, [user, isError, isSuccess, message, navigate, dispatch]);
 
   const handleChange = (e: { target: HTMLInputElement }) => {
     setCredential(credential => ({

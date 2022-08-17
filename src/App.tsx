@@ -1,16 +1,16 @@
 import React from 'react';
-import { GlobalStyle } from 'GlobalStyle';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { ToastContainer } from 'react-toastify';
+import { Provider } from 'react-redux';
+import { store } from 'store/store';
+import { GlobalStyle } from 'GlobalStyle';
+import 'react-toastify/dist/ReactToastify.css';
+import './App.css';
 import Home from 'pages/Home/Home';
 import AuthPage from 'pages/AuthPage/';
 import Profile from 'pages/Profile/Profile';
 import UsersList from 'pages/Users/UsersList';
-import { ToastContainer } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
 import Header from './components/Header';
-import { Provider } from 'react-redux';
-import { store } from 'store/store';
-import './App.css';
 
 function App() {
   return (
