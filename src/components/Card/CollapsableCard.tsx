@@ -64,7 +64,7 @@ const CollapsableCard = ({ data, page, action }: AppProps) => {
   const handleAddToContact = (data: IData) => {
     if (!data.user_info_id) return;
     dispatch(addToContact(data.user_info_id));
-    toast.warning('Added user to Contact');
+    toast.info('Added user to Contact');
   };
 
   return (
